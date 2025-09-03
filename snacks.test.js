@@ -1,4 +1,4 @@
-const { getInitials, createSlug, average, isPalindrome, findPostById } = require("./snacks.js")
+const { getInitials, createSlug, average, isPalindrome, findPostById, addPost, removePost } = require("./snacks.js")
 
 describe('Manipolazione di Stringhe', () => {
     //Snack 1
@@ -23,10 +23,18 @@ describe('Operazioni su Array', () => {
         expect(() => average([5, "Ciao"])).toThrow();
     })
 
-    const posts = [
-        { id: 1, title: "Introduzione a Javascript", slug: "introduzione-a-javascript" },
-        { id: 2, title: "React Hooks", slug: "react-hooks" }
-    ];
+    let posts;
+
+    beforeEach(() => {
+        posts = [
+            { id: 1, title: "Introduzione a Javascript", slug: "introduzione-a-javascript" },
+            { id: 2, title: "React Hooks", slug: "react-hooks" }
+        ];
+    })
+
+    //afterEach(() => {
+    //    posts = [];
+    //})
 
     //Snack 7
     test(`La funzione findPostById restituisce il post corretto dato l'array di post e l'id`, () => {
@@ -35,6 +43,16 @@ describe('Operazioni su Array', () => {
         expect(() => findPostById(posts, "ciao")).toThrow('"ciao" non è un id');
         expect(() => findPostById([34, 67], 2)).toThrow('Questo array posts non è nel formato corretto');
     });
+
+    //Snack 8 - BONUS
+    test('Dopo aver aggiunto un post con la funzione addPost, un array posts deve contenere un elemento in più.', () => {
+        addPost(posts, { id: 3, title: "Introduzione a Typescript", slug: "introduzione-a-typescript" });
+        expect(posts).toHaveLength(3);
+    });
+    test('Dopo aver rimosso un post con la funzione removePost, un array posts deve contenere un elemento in meno.', () => {
+        removePost(posts, 2);
+        expect(posts).toHaveLength(1);
+    })
 
 });
 
